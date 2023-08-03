@@ -23,6 +23,33 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', getTasks)
 
+app.post('/task/add', async (req, res) => {
+  const task = req.body.task
+  try {
+    const vv = await redisClient.rPush('tasks', task)
+    console.log(vv)
+    res.redirect('/')
+  } catch (err) {
+    console.error(err)
+    res.sendStatus(500)
+  }
+})
+
+app.post('/task/delete', async (req, res) => {
+  const taskToDel = req.body.tasks
+  try {
+    const tasks = await redisClient.lRange('tasks', 0, -1)
+    for (let i = 0; i < tasks.length; i++) {
+      if (taskToDel.indexOf(tasks[i]) > -1) {
+        await redisClient.lRem('tasks', 0, tasks[i])
+      }
+    }
+    res.redirect('/')
+  } catch (err) {
+    console.error(err)
+  }
+})
+
 async function getTasks(req, res, next) {
   const title = 'Task List'
   const tasks = await redisClient.lRange('tasks', 0, -1)
