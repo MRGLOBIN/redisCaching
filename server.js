@@ -3,6 +3,7 @@ const path = require('path')
 const express = require('express')
 const morgan = require('morgan')
 const redis = require('redis')
+const { name } = require('ejs')
 
 const app = express()
 
@@ -50,14 +51,45 @@ app.post('/task/delete', async (req, res) => {
   }
 })
 
+app.post('/call/add', async (req, res) => {
+  let newCall = {}
+
+  newCall.name = req.body.name
+  newCall.company = req.body.company
+  newCall.phone = req.body.phone
+  newCall.time = req.body.time
+
+  try {
+    const {code, err} = redisClient
+      .multi()
+      .hSet('call', 'name', newCall.name)
+      .hSet('call', 'company', newCall.company)
+      .hSet('call', 'phone', newCall.phone)
+      .hSet('call', 'time', newCall.time)
+      .EXEC()
+      if(err) {
+        console.error(err)
+      }
+      res.redirect('/')
+  } catch (err) {
+    console.error(err)
+  }
+})
+
 async function getTasks(req, res, next) {
   const title = 'Task List'
-  const tasks = await redisClient.lRange('tasks', 0, -1)
-  if (tasks.length > 0) {
-    res.render('index', {
-      title,
-      tasks,
-    })
+  try {
+    const tasks = await redisClient.lRange('tasks', 0, -1)
+    const call = await redisClient.hGetAll('call')
+    if (tasks.length > 0) {
+      res.render('index', {
+        title,
+        tasks,
+        call,
+      })
+    }
+  } catch (err) {
+    console.error(err)
   }
 }
 
