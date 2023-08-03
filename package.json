@@ -1,5 +1,5 @@
 {
-  "name": "redisCaching",
+  "name": "redis-caching",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

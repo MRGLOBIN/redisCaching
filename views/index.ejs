@@ -89,41 +89,44 @@
         Phone: <%= call.phone %><br />
         Time: <%= call.time %><br />
       </div>
-      <h3>Edit Next Call</h3>
-      <form
-        action="/call/add"
-        method="post"
-      >
-        <label for="name">Contact Name</label><br />
-        <input
-          type="text"
-          name="name"
-          placeholder="Task Name"
-        />
-        <br /><br />
-        <label>Company Name</label><br />
-        <input
-          type="text"
-          name="company"
-          placeholder="Company"
-        />
-        <br /><br />
-        <label>Phone</label><br />
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-        />
-        <br /><br />
-        <label>Day & Time</label><br />
-        <input
-          type="text"
-          name="time"
-          placeholder="Time"
-        />
-        <br /><br />
-        <button type="submit">Submit</button>
-      </form>
+
+      <div class="well">
+        <h3>Edit Next Call</h3>
+        <form
+          action="/call/add"
+          method="post"
+        >
+          <label for="name">Contact Name</label><br />
+          <input
+            type="text"
+            name="name"
+            placeholder="Task Name"
+          />
+          <br /><br />
+          <label>Company Name</label><br />
+          <input
+            type="text"
+            name="company"
+            placeholder="Company"
+          />
+          <br /><br />
+          <label>Phone</label><br />
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone"
+          />
+          <br /><br />
+          <label>Day & Time</label><br />
+          <input
+            type="text"
+            name="time"
+            placeholder="Time"
+          />
+          <br /><br />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>

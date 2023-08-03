@@ -85,7 +85,7 @@ async function getTasks(req, res, next) {
       res.render('index', {
         title,
         tasks,
-        call,
+        call
       })
     }
   } catch (err) {
